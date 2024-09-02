@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List of Horrible Landlords Worldwide</title>
+    <title>List of Horrible Landlords</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>List of Horrible Landlords Worldwide</h1>
+        <h1>List of Horrible Landlords</h1>
     </header>
     <div class="container">
         <div class="search-bar">
@@ -46,34 +46,54 @@
     </div>
 
     <script>
-        document.getElementById('submission-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent form from submitting normally
-            
-            const name = document.getElementById('name').value.trim();
-            const lastName = document.getElementById('last-name').value.trim();
-            const direction = document.getElementById('direction').value.trim();
-            const country = document.getElementById('country').value.trim();
-            const commentary = document.getElementById('commentary').value.trim();
-            
-            if (name && lastName && direction && country && commentary) {
-                // Get the list element
-                const list = document.getElementById('list');
-                
-                // Create a new list item
-                const listItem = document.createElement('li');
-                const itemCount = list.children.length + 1;
-                listItem.innerHTML = `${itemCount}. Name: ${name}, Last Name: ${lastName}, Direction: ${direction}, <span class="highlight">${country}</span>, Commentary: ${commentary}`;
-                
-                // Append the new list item to the list
-                list.appendChild(listItem);
-                
-                // Clear the input fields
-                document.getElementById('name').value = '';
-                document.getElementById('last-name').value = '';
-                document.getElementById('direction').value = '';
-                document.getElementById('country').value = '';
-                document.getElementById('commentary').value = '';
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('submission-form');
+            const list = document.getElementById('list');
+            const storageKey = 'landlordData';
+
+            function loadStoredData() {
+                const data = JSON.parse(localStorage.getItem(storageKey)) || [];
+                data.forEach((item, index) => {
+                    addItemToList(item, index + 1);
+                });
             }
+
+            function addItemToList(item, index) {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `${index}. Name: ${item.name}, Last Name: ${item.lastName}, Direction: ${item.direction}, <span class="highlight">${item.country}</span>, Commentary: ${item.commentary}`;
+                list.appendChild(listItem);
+            }
+
+            form.addEventListener('submit', (event) => {
+                event.preventDefault(); // Prevent form from submitting normally
+                
+                const name = document.getElementById('name').value.trim();
+                const lastName = document.getElementById('last-name').value.trim();
+                const direction = document.getElementById('direction').value.trim();
+                const country = document.getElementById('country').value.trim();
+                const commentary = document.getElementById('commentary').value.trim();
+                
+                if (name && lastName && direction && country && commentary) {
+                    const item = {
+                        name,
+                        lastName,
+                        direction,
+                        country,
+                        commentary
+                    };
+
+                    // Get existing data from local storage
+                    const data = JSON.parse(localStorage.getItem(storageKey)) || [];
+                    data.push(item);
+                    localStorage.setItem(storageKey, JSON.stringify(data));
+
+                    // Add to list and clear form
+                    addItemToList(item, data.length);
+                    form.reset();
+                }
+            });
+
+            loadStoredData();
         });
     </script>
 </body>
