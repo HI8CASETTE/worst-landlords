@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Worst Landlords Worldwide</title>
+    <title>List of Horrible Landlords Worldwide</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Worst Landlords Worldwide</h1>
+        <h1>List of Horrible Landlords Worldwide</h1>
     </header>
     <div class="container">
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search...">
+        </div>
         <h2>Submit Information</h2>
         <form id="submission-form">
             <div class="tabs">
@@ -49,19 +52,6 @@
             <h2>Submitted Information</h2>
             <ul id="list"></ul>
         </div>
-
-        <div class="landlord-list">
-            <h2>Top 10 Worst Landlords</h2>
-            <div class="landlord">
-                <h3>Landlord 1</h3>
-                <p>Description of landlord 1.</p>
-            </div>
-            <div class="landlord">
-                <h3>Landlord 2</h3>
-                <p>Description of landlord 2.</p>
-            </div>
-            <!-- Repeat for other landlords -->
-        </div>
     </div>
 
     <script>
@@ -95,7 +85,7 @@
                 // Create a new list item
                 const listItem = document.createElement('li');
                 const itemCount = list.children.length + 1;
-                listItem.textContent = `${itemCount}. Name: ${name}, Last Name: ${lastName}, Direction: ${direction}, Country: ${country}, Commentary: ${commentary}`;
+                listItem.innerHTML = `${itemCount}. Name: ${name}, Last Name: ${lastName}, Direction: ${direction}, <span class="highlight">${country}</span>, Commentary: ${commentary}`;
                 
                 // Append the new list item to the list
                 list.appendChild(listItem);
