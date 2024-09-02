@@ -3,23 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
+    <title>List of Horrible Landlords</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="welcome-page">
-        <h1>Welcome</h1>
-        <p>Click the button below to get started.</p>
-        <button id="start-button">Get Started</button>
+    <div id="container">
+        <div id="header">
+            <h1>THE LIST OF HORRIBLE LANDLORDS</h1>
+        </div>
+        <div id="form-section">
+            <h2>Submit Information</h2>
+            <form id="submit-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required><br><br>
+                <label for="last-name">Last Name:</label>
+                <input type="text" id="last-name" name="last-name" required><br><br>
+                <label for="direction">Direction:</label>
+                <input type="text" id="direction" name="direction" required><br><br>
+                <label for="country">Country:</label>
+                <input type="text" id="country" name="country" required><br><br>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const startButton = document.getElementById('start-button');
+            const form = document.getElementById('submit-form');
 
-            startButton.addEventListener('click', () => {
-                // Placeholder for future navigation
-                alert('Button clicked!');
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                alert('Information submitted!');
+                // Implement your form submission logic here
             });
         });
     </script>
