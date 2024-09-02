@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,152 +9,126 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background: #f4f4f4;
             color: #333;
         }
-
         .container {
-            max-width: 600px;
-            margin: 40px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
         }
-
-        h1 {
+        header {
+            background: #333;
+            color: #fff;
+            padding-top: 20px;
+            min-height: 70px;
+            border-bottom: #bbb 1px solid;
+        }
+        header h1 {
             text-align: center;
-            font-size: 24px;
-            margin-bottom: 20px;
+            margin: 0;
         }
-
         form {
-            margin-bottom: 40px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
-        label {
-            font-size: 14px;
-            margin-bottom: 5px;
+        form label {
             display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
-
-        input, textarea, button {
-            width: 100%;
+        form input, form textarea, form select {
+            width: calc(100% - 22px);
             padding: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
+            border-radius: 5px;
         }
-
-        button {
-            background-color: #333;
+        form input[type="submit"] {
+            background: #333;
             color: #fff;
             border: none;
             cursor: pointer;
-        }
-
-        .landlord-entry {
-            margin-bottom: 20px;
             padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            font-size: 16px;
         }
-
-        .landlord-entry h3 {
-            margin: 0;
-            font-size: 18px;
-            color: #e63946;
+        form input[type="submit"]:hover {
+            background: #555;
         }
-
-        .landlord-entry p {
-            margin: 5px 0;
-        }
-
         .map {
+            margin: 20px 0;
+        }
+        .map iframe {
             width: 100%;
-            height: 300px;
-            margin-top: 15px;
+            height: 400px;
+            border: 0;
         }
     </style>
 </head>
-
 <body>
+    <header>
+        <div class="container">
+            <h1>Worst Landlords Worldwide</h1>
+        </div>
+    </header>
+
     <div class="container">
-        <h1>Worst Landlords Worldwide</h1>
-        <form id="landlord-form">
-            <label for="name">Landlord Name:</label>
-            <input type="text" id="name" name="name" required>
+        <form id="landlordForm">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required>
 
-            <label for="location">Location (Address):</label>
-            <input type="text" id="location" name="location" required>
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required>
 
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" rows="4" required></textarea>
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" list="addressSuggestions" required>
+            <datalist id="addressSuggestions">
+                <!-- Auto-complete options will be dynamically added here -->
+            </datalist>
 
-            <button type="submit">Submit</button>
+            <label for="country">Country:</label>
+            <input type="text" id="country" name="country" required>
+
+            <label for="comments">Comments:</label>
+            <textarea id="comments" name="comments" rows="5" required></textarea>
+
+            <input type="submit" value="Submit">
         </form>
 
-        <div id="landlord-list"></div>
+        <div class="map">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.2137516803576!2d-122.41941868468116!3d37.77492927975953!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085808d5e7d6c53%3A0x9d4a2d90c1c047d7!2sSan+Francisco%2C+CA%2C+USA!5e0!3m2!1sen!2s!4v1636768535177!5m2!1sen!2s"
+                allowfullscreen=""
+                loading="lazy">
+            </iframe>
+        </div>
     </div>
 
     <script>
-        function initMap() {
-            const form = document.getElementById('landlord-form');
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
+        // Sample address suggestions for auto-complete
+        const addresses = [
+            "123 Fake Street, Springfield",
+            "456 Elm Street, Springfield",
+            "789 Maple Avenue, Springfield"
+        ];
 
-                const name = document.getElementById('name').value;
-                const location = document.getElementById('location').value;
-                const description = document.getElementById('description').value;
+        const addressInput = document.getElementById('address');
+        const addressDatalist = document.getElementById('addressSuggestions');
 
-                const entryDiv = document.createElement('div');
-                entryDiv.classList.add('landlord-entry');
+        addresses.forEach(address => {
+            const option = document.createElement('option');
+            option.value = address;
+            addressDatalist.appendChild(option);
+        });
 
-                const nameHeading = document.createElement('h3');
-                nameHeading.textContent = name;
-                entryDiv.appendChild(nameHeading);
-
-                const locationParagraph = document.createElement('p');
-                locationParagraph.textContent = 'Location: ' + location;
-                entryDiv.appendChild(locationParagraph);
-
-                const descriptionParagraph = document.createElement('p');
-                descriptionParagraph.textContent = description;
-                entryDiv.appendChild(descriptionParagraph);
-
-                const mapDiv = document.createElement('div');
-                mapDiv.classList.add('map');
-                entryDiv.appendChild(mapDiv);
-
-                document.getElementById('landlord-list').appendChild(entryDiv);
-
-                // Initialize Google Maps API
-                const geocoder = new google.maps.Geocoder();
-                geocoder.geocode({ 'address': location }, function (results, status) {
-                    if (status === 'OK') {
-                        const map = new google.maps.Map(mapDiv, {
-                            zoom: 14,
-                            center: results[0].geometry.location
-                        });
-
-                        new google.maps.Marker({
-                            position: results[0].geometry.location,
-                            map: map
-                        });
-                    } else {
-                        alert('Geocode was not successful for the following reason: ' + status);
-                    }
-                });
-
-                form.reset();
-            });
-        }
-    </script>
-
-    <script async
-        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+        // Form submission handling (for demo purposes, you can customize this)
+        document.getElementById('landlordForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Form submitted!');
+            // Here you would normally handle the form data
+        });
     </script>
 </body>
-
 </html>
