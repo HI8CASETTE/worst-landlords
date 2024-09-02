@@ -1,35 +1,59 @@
 body {
-    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f8f8f8; /* Light background */
-    color: #333; /* Dark text color */
+    background-color: #000; /* Black background */
+    color: #fff; /* White text */
+    font-family: Arial, sans-serif;
+}
+
+#container {
+    display: flex;
+    height: 100vh;
+}
+
+#header {
+    flex: 1;
+    padding: 2em;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    text-align: center;
+    border-right: 1px solid #fff; /* White divider */
 }
 
-#welcome-page {
-    background-color: #fff; /* White background for the welcome section */
-    padding: 2em 4em;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+#form-section {
+    flex: 1;
+    background-color: #fff; /* White background for the form section */
+    padding: 2em;
+    color: #000; /* Black text for the form section */
 }
 
 h1 {
     font-size: 2em;
-    margin-bottom: 0.5em;
+    margin: 0;
 }
 
-p {
+h2 {
+    font-size: 1.5em;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
     font-size: 1em;
-    margin-bottom: 1.5em;
+}
+
+input {
+    padding: 0.5em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 button {
-    padding: 0.75em 2em;
+    padding: 0.75em 1.5em;
     background-color: #333; /* Dark background */
     color: #fff; /* White text */
     border: none;
