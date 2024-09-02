@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List of Horrible Landlords</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -39,29 +40,41 @@
             <button type="submit">Submit</button>
         </form>
 
-        <div id="info-list">
-            <h2>Submitted Information</h2>
-            <ul id="list"></ul>
+        <div id="info-container">
+            <!-- Submitted info will be dynamically added here -->
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('submission-form');
-            const list = document.getElementById('list');
+            const infoContainer = document.getElementById('info-container');
             const storageKey = 'landlordData';
 
             function loadStoredData() {
                 const data = JSON.parse(localStorage.getItem(storageKey)) || [];
-                data.forEach((item, index) => {
-                    addItemToList(item, index + 1);
+                data.forEach(item => {
+                    addItemToPage(item);
                 });
             }
 
-            function addItemToList(item, index) {
-                const listItem = document.createElement('li');
-                listItem.innerHTML = `${index}. Name: ${item.name}, Last Name: ${item.lastName}, Direction: ${item.direction}, <span class="highlight">${item.country}</span>, Commentary: ${item.commentary}`;
-                list.appendChild(listItem);
+            function addItemToPage(item) {
+                const infoItem = document.createElement('div');
+                infoItem.className = 'info-item';
+                infoItem.innerHTML = `<strong>Name:</strong> ${item.name}<br>
+                                      <strong>Last Name:</strong> ${item.lastName}<br>
+                                      <strong>Direction:</strong> ${item.direction}<br>
+                                      <strong>Country:</strong> <span class="highlight">${item.country}</span><br>
+                                      <strong>Commentary:</strong> ${item.commentary}`;
+
+                // Randomly position the item
+                const top = Math.random() * (window.innerHeight - 150); // 150px is a rough estimate of item height
+                const left = Math.random() * (window.innerWidth - 300); // 300px is a rough estimate of item width
+
+                infoItem.style.top = `${top}px`;
+                infoItem.style.left = `${left}px`;
+
+                infoContainer.appendChild(infoItem);
             }
 
             form.addEventListener('submit', (event) => {
@@ -87,8 +100,8 @@
                     data.push(item);
                     localStorage.setItem(storageKey, JSON.stringify(data));
 
-                    // Add to list and clear form
-                    addItemToList(item, data.length);
+                    // Add to page and clear form
+                    addItemToPage(item);
                     form.reset();
                 }
             });
