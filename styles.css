@@ -94,11 +94,6 @@ button:hover {
     padding: 1em;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-.landlord img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 4px;
-}
 .landlord h3 {
     margin: 0.5em 0;
 }
