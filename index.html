@@ -52,21 +52,17 @@
 
         <div class="landlord-list">
             <h2>Top 10 Worst Landlords</h2>
-            <div class="landlord-item">
-                <img src="image1.jpg" alt="Landlord 1">
-                <div class="landlord-info">
-                    <h3>Landlord 1</h3>
-                    <p>Description of landlord 1.</p>
-                </div>
+            <div class="landlord">
+                <img src="https://example.com/image1.jpg" alt="Landlord 1">
+                <h3>Landlord 1</h3>
+                <p>Description of landlord 1.</p>
             </div>
-            <div class="landlord-item">
-                <img src="image2.jpg" alt="Landlord 2">
-                <div class="landlord-info">
-                    <h3>Landlord 2</h3>
-                    <p>Description of landlord 2.</p>
-                </div>
+            <div class="landlord">
+                <img src="https://example.com/image2.jpg" alt="Landlord 2">
+                <h3>Landlord 2</h3>
+                <p>Description of landlord 2.</p>
             </div>
-            <!-- Add more landlord items as needed -->
+            <!-- Repeat for other landlords -->
         </div>
     </div>
 
@@ -106,4 +102,14 @@
                 // Append the new list item to the list
                 list.appendChild(listItem);
                 
-                // Clear the
+                // Clear the input fields
+                document.getElementById('name').value = '';
+                document.getElementById('last-name').value = '';
+                document.getElementById('direction').value = '';
+                document.getElementById('country').value = '';
+                document.getElementById('commentary').value = '';
+            }
+        });
+    </script>
+</body>
+</html>
