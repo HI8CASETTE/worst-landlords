@@ -3,145 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List of Horrible Landlords</title>
+    <title>Welcome</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="home-page">
-        <pre>
-          _____
-         /     \
-        /_______\
-       |  ___  |
-       | |___| |
-       |_______|
-        </pre>
-        <button id="start-button">Click the House</button>
-    </div>
-
-    <div id="form-page" class="hidden">
-        <header>
-            <h1>List of Horrible Landlords</h1>
-        </header>
-        <div class="container">
-            <h2>Submit Information</h2>
-            <form id="submission-form">
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="last-name">Last Name:</label>
-                    <input type="text" id="last-name" name="last-name" required>
-                </div>
-                <div class="form-group">
-                    <label for="direction">Direction:</label>
-                    <input type="text" id="direction" name="direction" required>
-                </div>
-                <div class="form-group">
-                    <label for="country">Country:</label>
-                    <input type="text" id="country" name="country" required>
-                </div>
-                <div class="form-group">
-                    <label for="commentary">Commentary:</label>
-                    <textarea id="commentary" name="commentary" rows="4" required></textarea>
-                </div>
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="info-page" class="hidden">
-        <header>
-            <h1>List of Horrible Landlords</h1>
-        </header>
-        <div class="container">
-            <h2>Submitted Information</h2>
-            <div id="info-container">
-                <!-- Submitted info will be dynamically added here -->
-            </div>
-        </div>
+    <div id="welcome-page">
+        <h1>Welcome</h1>
+        <p>Click the button below to get started.</p>
+        <button id="start-button">Get Started</button>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const homePage = document.getElementById('home-page');
-            const formPage = document.getElementById('form-page');
-            const infoPage = document.getElementById('info-page');
             const startButton = document.getElementById('start-button');
-            const form = document.getElementById('submission-form');
-            const infoContainer = document.getElementById('info-container');
-            const storageKey = 'landlordData';
-
-            function showPage(pageToShow) {
-                homePage.classList.add('hidden');
-                formPage.classList.add('hidden');
-                infoPage.classList.add('hidden');
-                pageToShow.classList.remove('hidden');
-            }
 
             startButton.addEventListener('click', () => {
-                showPage(formPage);
+                // Placeholder for future navigation
+                alert('Button clicked!');
             });
-
-            function loadStoredData() {
-                const data = JSON.parse(localStorage.getItem(storageKey)) || [];
-                data.forEach(item => {
-                    addItemToPage(item);
-                });
-            }
-
-            function addItemToPage(item) {
-                const infoItem = document.createElement('div');
-                infoItem.className = 'info-item';
-                infoItem.innerHTML = `<strong>Name:</strong> ${item.name}<br>
-                                      <strong>Last Name:</strong> ${item.lastName}<br>
-                                      <strong>Direction:</strong> ${item.direction}<br>
-                                      <strong>Country:</strong> <span class="highlight">${item.country}</span><br>
-                                      <strong>Commentary:</strong> ${item.commentary}`;
-
-                // Randomly position the item
-                const top = Math.random() * (window.innerHeight - 150); // 150px is a rough estimate of item height
-                const left = Math.random() * (window.innerWidth - 300); // 300px is a rough estimate of item width
-
-                infoItem.style.top = `${top}px`;
-                infoItem.style.left = `${left}px`;
-
-                infoContainer.appendChild(infoItem);
-            }
-
-            form.addEventListener('submit', (event) => {
-                event.preventDefault(); // Prevent form from submitting normally
-                
-                const name = document.getElementById('name').value.trim();
-                const lastName = document.getElementById('last-name').value.trim();
-                const direction = document.getElementById('direction').value.trim();
-                const country = document.getElementById('country').value.trim();
-                const commentary = document.getElementById('commentary').value.trim();
-                
-                if (name && lastName && direction && country && commentary) {
-                    const item = {
-                        name,
-                        lastName,
-                        direction,
-                        country,
-                        commentary
-                    };
-
-                    // Get existing data from local storage
-                    const data = JSON.parse(localStorage.getItem(storageKey)) || [];
-                    data.push(item);
-                    localStorage.setItem(storageKey, JSON.stringify(data));
-
-                    // Add to page and clear form
-                    addItemToPage(item);
-                    form.reset();
-                    showPage(infoPage);
-                }
-            });
-
-            loadStoredData();
         });
     </script>
 </body>
