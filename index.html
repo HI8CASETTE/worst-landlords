@@ -13,8 +13,35 @@
     <div class="container">
         <h2>Submit Information</h2>
         <form id="submission-form">
-            <label for="info">Landlord's Information:</label>
-            <input type="text" id="info" name="info" required>
+            <div class="tabs">
+                <button type="button" class="tab-button active" data-tab="name">Name</button>
+                <button type="button" class="tab-button" data-tab="last-name">Last Name</button>
+                <button type="button" class="tab-button" data-tab="direction">Direction</button>
+                <button type="button" class="tab-button" data-tab="country">Country</button>
+                <button type="button" class="tab-button" data-tab="commentary">Commentary</button>
+            </div>
+            <div class="tab-content">
+                <div id="name" class="tab-pane active">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div id="last-name" class="tab-pane">
+                    <label for="last-name">Last Name:</label>
+                    <input type="text" id="last-name" name="last-name" required>
+                </div>
+                <div id="direction" class="tab-pane">
+                    <label for="direction">Direction:</label>
+                    <input type="text" id="direction" name="direction" required>
+                </div>
+                <div id="country" class="tab-pane">
+                    <label for="country">Country:</label>
+                    <input type="text" id="country" name="country" required>
+                </div>
+                <div id="commentary" class="tab-pane">
+                    <label for="commentary">Commentary:</label>
+                    <textarea id="commentary" name="commentary" rows="4" required></textarea>
+                </div>
+            </div>
             <button type="submit">Submit</button>
         </form>
 
@@ -22,32 +49,61 @@
             <h2>Submitted Information</h2>
             <ul id="list"></ul>
         </div>
+
+        <div class="landlord-list">
+            <h2>Top 10 Worst Landlords</h2>
+            <div class="landlord-item">
+                <img src="image1.jpg" alt="Landlord 1">
+                <div class="landlord-info">
+                    <h3>Landlord 1</h3>
+                    <p>Description of landlord 1.</p>
+                </div>
+            </div>
+            <div class="landlord-item">
+                <img src="image2.jpg" alt="Landlord 2">
+                <div class="landlord-info">
+                    <h3>Landlord 2</h3>
+                    <p>Description of landlord 2.</p>
+                </div>
+            </div>
+            <!-- Add more landlord items as needed -->
+        </div>
     </div>
 
     <script>
-        // JavaScript to handle form submission and update the list
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                
+                // Remove active class from all buttons and tab panes
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+                
+                // Add active class to the clicked button and corresponding tab pane
+                button.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
         document.getElementById('submission-form').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent form from submitting normally
             
-            const infoInput = document.getElementById('info');
-            const infoValue = infoInput.value.trim();
+            const name = document.getElementById('name').value.trim();
+            const lastName = document.getElementById('last-name').value.trim();
+            const direction = document.getElementById('direction').value.trim();
+            const country = document.getElementById('country').value.trim();
+            const commentary = document.getElementById('commentary').value.trim();
             
-            if (infoValue) {
+            if (name && lastName && direction && country && commentary) {
                 // Get the list element
                 const list = document.getElementById('list');
                 
                 // Create a new list item
                 const listItem = document.createElement('li');
                 const itemCount = list.children.length + 1;
-                listItem.textContent = `${itemCount}. ${infoValue}`;
+                listItem.textContent = `${itemCount}. Name: ${name}, Last Name: ${lastName}, Direction: ${direction}, Country: ${country}, Commentary: ${commentary}`;
                 
                 // Append the new list item to the list
                 list.appendChild(listItem);
                 
-                // Clear the input field
-                infoInput.value = '';
-            }
-        });
-    </script>
-</body>
-</html>
+                // Clear the
