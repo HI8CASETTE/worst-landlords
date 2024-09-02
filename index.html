@@ -8,48 +8,82 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>List of Horrible Landlords</h1>
-    </header>
-    <div class="container">
-        <div class="search-bar">
-            <input type="text" id="search-input" placeholder="Search...">
-        </div>
-        <h2>Submit Information</h2>
-        <form id="submission-form">
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="last-name">Last Name:</label>
-                <input type="text" id="last-name" name="last-name" required>
-            </div>
-            <div class="form-group">
-                <label for="direction">Direction:</label>
-                <input type="text" id="direction" name="direction" required>
-            </div>
-            <div class="form-group">
-                <label for="country">Country:</label>
-                <input type="text" id="country" name="country" required>
-            </div>
-            <div class="form-group">
-                <label for="commentary">Commentary:</label>
-                <textarea id="commentary" name="commentary" rows="4" required></textarea>
-            </div>
-            <button type="submit">Submit</button>
-        </form>
+    <div id="home-page">
+        <pre>
+          _____
+         /     \
+        /_______\
+       |  ___  |
+       | |___| |
+       |_______|
+        </pre>
+        <button id="start-button">Click the House</button>
+    </div>
 
-        <div id="info-container">
-            <!-- Submitted info will be dynamically added here -->
+    <div id="form-page" class="hidden">
+        <header>
+            <h1>List of Horrible Landlords</h1>
+        </header>
+        <div class="container">
+            <h2>Submit Information</h2>
+            <form id="submission-form">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="last-name">Last Name:</label>
+                    <input type="text" id="last-name" name="last-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="direction">Direction:</label>
+                    <input type="text" id="direction" name="direction" required>
+                </div>
+                <div class="form-group">
+                    <label for="country">Country:</label>
+                    <input type="text" id="country" name="country" required>
+                </div>
+                <div class="form-group">
+                    <label for="commentary">Commentary:</label>
+                    <textarea id="commentary" name="commentary" rows="4" required></textarea>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="info-page" class="hidden">
+        <header>
+            <h1>List of Horrible Landlords</h1>
+        </header>
+        <div class="container">
+            <h2>Submitted Information</h2>
+            <div id="info-container">
+                <!-- Submitted info will be dynamically added here -->
+            </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const homePage = document.getElementById('home-page');
+            const formPage = document.getElementById('form-page');
+            const infoPage = document.getElementById('info-page');
+            const startButton = document.getElementById('start-button');
             const form = document.getElementById('submission-form');
             const infoContainer = document.getElementById('info-container');
             const storageKey = 'landlordData';
+
+            function showPage(pageToShow) {
+                homePage.classList.add('hidden');
+                formPage.classList.add('hidden');
+                infoPage.classList.add('hidden');
+                pageToShow.classList.remove('hidden');
+            }
+
+            startButton.addEventListener('click', () => {
+                showPage(formPage);
+            });
 
             function loadStoredData() {
                 const data = JSON.parse(localStorage.getItem(storageKey)) || [];
@@ -103,6 +137,7 @@
                     // Add to page and clear form
                     addItemToPage(item);
                     form.reset();
+                    showPage(infoPage);
                 }
             });
 
