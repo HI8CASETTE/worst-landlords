@@ -15,7 +15,7 @@ body {
     flex: 1;
     padding: 2em;
     display: flex;
-    align-items: center;
+    align-items: left;
     justify-content: center;
     border-right: 1px solid #fff; /* White divider */
 }
